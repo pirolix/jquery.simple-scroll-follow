@@ -1,0 +1,46 @@
+@charset "utf-8";
+
+body {
+	margin: 0;
+	padding: 0;
+	background: url(null) fixed;
+}
+
+header {
+	padding: 16px;
+	padding-bottom: 16em;
+	background: #bcd;
+	border-bottom: 1px solid #999;
+}
+
+#contents {
+	position: relative;
+}
+
+article {
+	box-sizing: border-box;
+	width: 200px;
+	padding: 16px;
+	background: #bcd;
+	position: static;
+}
+
+aside, aside2 {
+	box-sizing: border-box;
+	width: 300px;
+	padding: 16px;
+	background: #fbb;
+	position: absolute;
+	top: 0px;
+	left: 200px;
+	border: 2px solid #f77;
+}
+	aside2 { left: 500px; }
+
+footer {
+	clear: both;
+	padding: 16px;
+	padding-bottom: 16em;
+	border-top: 1px solid #999;
+	background: #bcd;
+}
