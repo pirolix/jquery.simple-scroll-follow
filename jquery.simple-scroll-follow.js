@@ -103,6 +103,8 @@ $.extend(SimpleScrollFollow.prototype, /** @lends SimpleScrollFollow.prototype *
 	 */
 	setOption: function(self, option) {
 		self.option = $.extend({
+			offset_top: 0,
+			offset_bottom: 0,
 			enabled: true,
 			limit_elem: $('body'),
 			min_width: 0
@@ -185,7 +187,7 @@ $.extend(SimpleScrollFollow.prototype, /** @lends SimpleScrollFollow.prototype *
 				}
 			}
 			*/
-			if (win.scroll_top  < self.follow.offset_top) { // 画面上辺は上限より上か?
+			if (win.scroll_top  < self.follow.offset_top - self.option.offset_top) { // 画面上辺は上限より上か?
 				// absolute: 要素上端は上限へ
 				$(self.follow.elem)
 					.css({
@@ -208,7 +210,7 @@ $.extend(SimpleScrollFollow.prototype, /** @lends SimpleScrollFollow.prototype *
 					})
 					.width(self.follow.width);
 			} else if ((win.scroll_bottom - win.scroll_top) > (current.offset_bottom -current.offset_top)) { // 画面高は要素高より高いか?
-				if ((limit.offset_bottom - win.scroll_top) < (current.offset_bottom -current.offset_top)) { // 下限 - 画面上辺 は、要素高より短いか?
+				if ((limit.offset_bottom - win.scroll_top) < (current.offset_bottom -current.offset_top + self.option.offset_top)) { // 下限 - 画面上辺 は、要素高より短いか?
 					// absolute: 要素下端は下限へ
 					$(self.follow.elem)
 						.css({
@@ -224,7 +226,7 @@ $.extend(SimpleScrollFollow.prototype, /** @lends SimpleScrollFollow.prototype *
 					$(self.follow.elem)
 						.css({
 							position: 'fixed',
-							top: 0,
+							top: self.option.offset_top,
 							bottom: 'auto',
 							left: self.follow.offset_left,
 							right: 'auto'
@@ -232,7 +234,7 @@ $.extend(SimpleScrollFollow.prototype, /** @lends SimpleScrollFollow.prototype *
 						.width(self.follow.width);
 				}
 			} else {
-				if (win.scroll_bottom > limit.offset_bottom) { // 画面下辺は下限より下か?
+				if (win.scroll_bottom > limit.offset_bottom + self.option.offset_bottom) { // 画面下辺は下限より下か?
 					// absolute: 要素下端は下限へ
 					$(self.follow.elem)
 						.css({
@@ -243,13 +245,13 @@ $.extend(SimpleScrollFollow.prototype, /** @lends SimpleScrollFollow.prototype *
 							right: ''
 						})
 						.width(self.follow.width);
-				} else if ((win.scroll_bottom - self.follow.offset_top) > (current.offset_bottom - current.offset_top)) { // 画面下辺 - 上限 は、要素高より長いか?
+				} else if ((win.scroll_bottom - self.follow.offset_top) > (current.offset_bottom - current.offset_top + self.option.offset_bottom)) { // 画面下辺 - 上限 は、要素高より長いか?
 					// fixed: 要素下端は画面下辺へ
 					$(self.follow.elem)
 						.css({
 							position: 'fixed',
 							top: 'auto',
-							bottom: 0,
+							bottom: self.option.offset_bottom,
 							left: self.follow.offset_left,
 							right: 'auto'
 						})
